@@ -23,6 +23,7 @@
         <section id="add-student">
             <h2>Add Student</h2>
             <form id="student-form">
+                <input type="hidden" id="student-id">
                 <label for="student-name">Student Name:</label>
                 <input type="text" id="student-name" name="student-name" required>
                 
@@ -52,7 +53,6 @@
     </div>
 
     <script>
-
 document.addEventListener('DOMContentLoaded', function () {
     const studentForm = document.getElementById('student-form');
     const studentTableBody = document.querySelector('#student-table tbody');
@@ -61,9 +61,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let students = JSON.parse(localStorage.getItem('students')) || [];
     let courses = JSON.parse(localStorage.getItem('courses')) || [
-        { id: 1, name: 'Mathematics' },
-        { id: 2, name: 'Physics' },
-        { id: 3, name: 'Chemistry' }
+        { id: 1, name: 'Java' },
+        { id: 2, name: 'Python' },
+        { id: 3, name: 'Dotnet' }
     ];
 
     // Save data to local storage
@@ -85,20 +85,31 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add Student
     studentForm.addEventListener('submit', function (event) {
         event.preventDefault();
+        const studentId = document.getElementById('student-id').value;
         const studentName = document.getElementById('student-name').value;
         const studentCourse = document.getElementById('student-course').value;
 
         if (studentName && studentCourse) {
-            const student = {
-                id: students.length + 1,
-                name: studentName,
-                course: studentCourse
-            };
-            students.push(student);
+            if (studentId) {
+                // Edit existing student
+                const student = students.find(s => s.id === parseInt(studentId));
+                student.name = studentName;
+                student.course = studentCourse;
+            } else {
+                // Add new student
+                const student = {
+                    id: students.length ? students[students.length - 1].id + 1 : 1,
+                    name: studentName,
+                    course: studentCourse
+                };
+                students.push(student);
+            }
+
             saveStudents();
-            addStudentToTable(student);
+            renderStudentTable();
             updateTotalStudents();
             studentForm.reset();
+            document.getElementById('student-id').value = '';
         }
     });
 
@@ -126,9 +137,9 @@ document.addEventListener('DOMContentLoaded', function () {
     window.editStudent = function (id) {
         const student = students.find(s => s.id === id);
         if (student) {
+            document.getElementById('student-id').value = student.id;
             document.getElementById('student-name').value = student.name;
             document.getElementById('student-course').value = student.course;
-            deleteStudent(id);
         }
     };
 

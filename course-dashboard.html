@@ -23,6 +23,7 @@
         <section id="add-course">
             <h2>Add Course</h2>
             <form id="course-form">
+                <input type="hidden" id="course-id">
                 <label for="course-name">Course Name:</label>
                 <input type="text" id="course-name" name="course-name" required>
                 <button type="submit">Add Course</button>
@@ -45,7 +46,6 @@
     </div>
 
     <script>
-
 document.addEventListener('DOMContentLoaded', function () {
     const courseForm = document.getElementById('course-form');
     const courseTableBody = document.querySelector('#course-table tbody');
@@ -65,18 +65,28 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add Course
     courseForm.addEventListener('submit', function (event) {
         event.preventDefault();
+        const courseId = document.getElementById('course-id').value;
         const courseName = document.getElementById('course-name').value;
 
         if (courseName) {
-            const course = {
-                id: courses.length + 1,
-                name: courseName
-            };
-            courses.push(course);
+            if (courseId) {
+                // Edit existing course
+                const course = courses.find(c => c.id === parseInt(courseId));
+                course.name = courseName;
+            } else {
+                // Add new course
+                const course = {
+                    id: courses.length ? courses[courses.length - 1].id + 1 : 1,
+                    name: courseName
+                };
+                courses.push(course);
+            }
+
             saveCourses();
-            addCourseToTable(course);
+            renderCourseTable();
             updateTotalCourses();
             courseForm.reset();
+            document.getElementById('course-id').value = '';
         }
     });
 
@@ -103,8 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
     window.editCourse = function (id) {
         const course = courses.find(c => c.id === id);
         if (course) {
+            document.getElementById('course-id').value = course.id;
             document.getElementById('course-name').value = course.name;
-            deleteCourse(id);
         }
     };
 

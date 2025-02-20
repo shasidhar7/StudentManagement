@@ -24,6 +24,7 @@
         <section id="attendance-section">
             <h2>Mark Attendance</h2>
             <form id="attendance-form">
+                <input type="hidden" id="attendance-id">
                 <label class="text">Select Student:</label>
                 <select id="student-select" class="input" required>
                     <!-- Students will be populated dynamically -->
@@ -48,6 +49,7 @@
                         <th>Name</th>
                         <th>Status</th>
                         <th>Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>

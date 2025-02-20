@@ -88,5 +88,5 @@ document.addEventListener("DOMContentLoaded", function () {
       return user;
     });
     localStorage.setItem("users", JSON.stringify(updatedUsers));
-  }
+  }
 });
