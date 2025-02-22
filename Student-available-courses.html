@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Courses</title>
+    <!-- <link rel="stylesheet" href="student-portal-style.css"> -->
+     <style>
+        /* student-portal-style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #333;
+}
+
+.course-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.course-card h3 {
+    margin-top: 0;
+    color: #007BFF;
+}
+
+.course-card p {
+    color: #666;
+}
+
+.course-card button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.course-card button:hover {
+    background-color: #0056b3;
+}
+     </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Only the Available Courses section is visible -->
+        <section id="available-courses">
+            <h2>Available Courses</h2>
+            <div id="course-list">
+                <!-- Courses will be populated dynamically -->
+            </div>
+        </section>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const courseList = document.getElementById('course-list');
+
+    // Fetch courses from localStorage or use a default list
+    let courses = JSON.parse(localStorage.getItem('courses')) || [
+        { id: 1, name: 'Introduction to Computer Science' },
+        { id: 2, name: 'Web Development Fundamentals' },
+        { id: 3, name: 'Data Structures and Algorithms' },
+        { id: 4, name: 'Machine Learning Basics' },
+        { id: 5, name: 'Mobile App Development' }
+    ];
+
+    // Display available courses
+    function renderCourses() {
+        courseList.innerHTML = ''; // Clear the list before rendering
+        courses.forEach(course => {
+            const card = document.createElement('div');
+            card.className = 'course-card';
+            card.innerHTML = `
+                <h3>${course.name}</h3>
+                <p>Course ID: ${course.id}</p>
+                <button onclick="enrollCourse(${course.id})">Enroll</button>
+            `;
+            courseList.appendChild(card);
+        });
+    }
+
+    // Enroll in a course
+    window.enrollCourse = function (courseId) {
+        const course = courses.find(c => c.id === courseId);
+        if (course) {
+            alert(`Enrolled in ${course.name}`);
+            // Add logic to track enrollment (e.g., save to localStorage)
+        }
+    };
+
+    // Initial Render
+    renderCourses();
+});
+    </script>
+</body>
+</html>

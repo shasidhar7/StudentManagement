@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Student Management Dashboard</h1>
+        
+        <!-- Navigation Menu -->
+        <nav>
+            <ul>
+                <li><a href="admin-portal.html">Dashboard</a></li>
+                <li><a href="course-dashboard.html">Course Management</a></li>
+                <li><a href="attendance-dashboard.html">Attendance Tracking</a></li>
+            </ul>
+        </nav>
+
+        <!-- Add Student Form -->
+        <section id="add-student">
+            <h2>Add Student</h2>
+            <form id="student-form">
+                <input type="hidden" id="student-id">
+                <label for="student-name">Student Name:</label>
+                <input type="text" id="student-name" name="student-name" required>
+                
+                <label for="student-course">Course:</label>
+                <select id="student-course" name="student-course" required>
+                    <!-- Courses will be populated dynamically -->
+                </select>
+                
+                <button type="submit">Add Student</button>
+            </form>
+
+            <h3>Total Students: <span id="total-students">0</span></h3>
+            <table id="student-table">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Student data will be populated here dynamically -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const studentForm = document.getElementById('student-form');
+    const studentTableBody = document.querySelector('#student-table tbody');
+    const courseSelect = document.getElementById('student-course');
+    const totalStudents = document.getElementById('total-students');
+
+    let students = JSON.parse(localStorage.getItem('students')) || [];
+    let courses = JSON.parse(localStorage.getItem('courses')) || [
+        { id: 1, name: 'Java' },
+        { id: 2, name: 'Python' },
+        { id: 3, name: 'Dotnet' }
+    ];
+
+    // Save data to local storage
+    function saveStudents() {
+        localStorage.setItem('students', JSON.stringify(students));
+    }
+
+    // Populate Course Select Dropdown
+    function populateCourseSelect() {
+        courseSelect.innerHTML = '';
+        courses.forEach(course => {
+            const option = document.createElement('option');
+            option.value = course.name;
+            option.textContent = course.name;
+            courseSelect.appendChild(option);
+        });
+    }
+
+    // Add Student
+    studentForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const studentId = document.getElementById('student-id').value;
+        const studentName = document.getElementById('student-name').value;
+        const studentCourse = document.getElementById('student-course').value;
+
+        if (studentName && studentCourse) {
+            if (studentId) {
+                // Edit existing student
+                const student = students.find(s => s.id === parseInt(studentId));
+                student.name = studentName;
+                student.course = studentCourse;
+            } else {
+                // Add new student
+                const student = {
+                    id: students.length ? students[students.length - 1].id + 1 : 1,
+                    name: studentName,
+                    course: studentCourse
+                };
+                students.push(student);
+            }
+
+            saveStudents();
+            renderStudentTable();
+            updateTotalStudents();
+            studentForm.reset();
+            document.getElementById('student-id').value = '';
+        }
+    });
+
+    // Add Student to Table
+    function addStudentToTable(student) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${student.id}</td>
+            <td>${student.name}</td>
+            <td>${student.course}</td>
+            <td class="actions">
+                <button class="edit" onclick="editStudent(${student.id})">Edit</button>
+                <button class="delete" onclick="deleteStudent(${student.id})">Delete</button>
+            </td>
+        `;
+        studentTableBody.appendChild(row);
+    }
+
+    // Update Total Students
+    function updateTotalStudents() {
+        totalStudents.textContent = students.length;
+    }
+
+    // Edit Student
+    window.editStudent = function (id) {
+        const student = students.find(s => s.id === id);
+        if (student) {
+            document.getElementById('student-id').value = student.id;
+            document.getElementById('student-name').value = student.name;
+            document.getElementById('student-course').value = student.course;
+        }
+    };
+
+    // Delete Student
+    window.deleteStudent = function (id) {
+        students = students.filter(s => s.id !== id);
+        saveStudents();
+        renderStudentTable();
+        updateTotalStudents();
+    };
+
+    // Render Student Table
+    function renderStudentTable() {
+        studentTableBody.innerHTML = '';
+        students.forEach(student => addStudentToTable(student));
+    }
+
+    // Initial Render
+    populateCourseSelect();
+    renderStudentTable();
+    updateTotalStudents();
+});
+
+    </script>
+</body>
+</html>

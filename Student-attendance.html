@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Report</title>
+    <link rel="stylesheet" href="admin_dashboard.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        #attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #attendance-table th, #attendance-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        #attendance-table th {
+            background-color: #f2f2f2;
+        }
+
+        #controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #date-picker, #status-picker {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #mark-attendance-btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #mark-attendance-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .present {
+            background-color: #c8e6c9 !important; /* Green */
+        }
+
+        .absent {
+            background-color: #ffcdd2 !important; /* Red */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Attendance Report</h2>
+
+        <div id="controls">
+            <input type="date" id="date-picker">
+            <select id="status-picker">
+                <option value="Present">Present</option>
+                <option value="Absent">Absent</option>
+            </select>
+            <button id="mark-attendance-btn">Mark Attendance</button>
+        </div>
+
+        <table id="attendance-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Attendance records will be populated dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const attendanceTableBody = document.querySelector('#attendance-table tbody');
+            const markAttendanceBtn = document.getElementById('mark-attendance-btn');
+            const datePicker = document.getElementById('date-picker');
+            const statusPicker = document.getElementById('status-picker');
+
+            // Load attendance records from localStorage
+            let attendanceRecords = JSON.parse(localStorage.getItem('attendance')) || [];
+
+            function renderAttendance() {
+                attendanceTableBody.innerHTML = ''; // Clear table
+
+                attendanceRecords.forEach(record => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${record.date}</td>
+                        <td class="${record.status.toLowerCase()}">${record.status}</td>
+                    `;
+                    attendanceTableBody.appendChild(row);
+                });
+            }
+
+            // Function to mark attendance
+            markAttendanceBtn.addEventListener('click', function () {
+                const selectedDate = datePicker.value; // Get selected date
+                const status = statusPicker.value; // Get status
+
+                if (!selectedDate) {
+                    alert("Please select a date.");
+                    return;
+                }
+
+                // Check if attendance is already marked for the selected date
+                const existingRecordIndex = attendanceRecords.findIndex(record => record.date === selectedDate);
+
+                if (existingRecordIndex !== -1) {
+                    // Update the existing record
+                    attendanceRecords[existingRecordIndex].status = status;
+                } else {
+                    // Add new attendance record
+                    attendanceRecords.push({ date: selectedDate, status: status });
+                }
+
+                // Save to localStorage
+                localStorage.setItem('attendance', JSON.stringify(attendanceRecords));
+                renderAttendance(); // Refresh table
+                alert(`Attendance marked as "${status}" for ${selectedDate}`);
+            });
+
+            // Initial render
+            renderAttendance();
+        });
+    </script>
+</body>
+</html>

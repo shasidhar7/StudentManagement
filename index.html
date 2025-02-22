@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>LOGIN</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <h1 id="main-heading">Student Management Portal</h1>
+      <form id="loginForm">
+        <h2 id="login-heading">Login</h2>
+
+        <div class="container">
+          <label class="text">Email</label>
+          <input
+            type="email"
+            name="email"
+            class="input"
+            required
+            placeholder="name@domain.com"
+          />
+          <br /><br />
+
+          <label class="text">Password</label>
+          <input
+            type="password"
+            name="password"
+            class="input"
+            required
+            placeholder="password"
+          />
+          <br /><br />
+        </div>
+        <input type="submit" value="Login" class="btn" />
+        <br /><br />
+
+        <!-- Forgot Password (Initially Hidden) -->
+        <p id="forgot-password" class="text" style="display: none">
+          <a href="forgot-password.html">Forgot Password?</a>
+        </p>
+
+        <p class="label-text">
+          Don't have an Account? &nbsp;<a href="registration.html">Register</a>
+        </p>
+      </form>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>

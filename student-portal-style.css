@@ -1,0 +1,242 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("images/music3.jpg") no-repeat center center/cover;
+  color: white;
+  line-height: 1.6;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #ff23a0;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+/* Navigation Menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+nav ul li {
+  margin-bottom: 15px;
+}
+
+nav ul li:last-child {
+  margin-bottom: 0;
+}
+
+nav ul li a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 15px 20px;
+  border-radius: 25px;
+  background: linear-gradient(45deg, #ff23a0, #ff6b6b);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  font-size: 1rem;
+}
+
+nav ul li a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(255, 35, 160, 0.4);
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: left;
+  color: white;
+}
+
+table th {
+  background-color: #ff23a0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+table tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Card Styling for Courses */
+.course-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.course-card h3 {
+  color: #ff23a0;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.course-card p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.course-card button {
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  background: linear-gradient(45deg, #ffd423, #ffb347);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.course-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 212, 35, 0.3);
+}
+
+/* Personal Data Section */
+#personal-data {
+  width: 100%;
+  text-align: left;
+  margin-top: 20px;
+}
+
+#personal-data h2 {
+  color: #ff23a0;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+#personal-data p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+/* Section Headings */
+section h2 {
+  color: #ff23a0;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  nav ul li a {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+
+  .course-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .course-card p {
+    font-size: 0.8rem;
+  }
+
+  .course-card button {
+    font-size: 0.8rem;
+  }
+
+  #personal-data p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  nav ul li a {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+
+  .course-card {
+    padding: 15px;
+  }
+
+  .course-card h3 {
+    font-size: 1rem;
+  }
+
+  .course-card p {
+    font-size: 0.75rem;
+  }
+
+  .course-card button {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  #personal-data p {
+    font-size: 0.8rem;
+  }
+}

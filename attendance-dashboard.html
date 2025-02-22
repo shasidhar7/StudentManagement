@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracking Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance Tracking Dashboard</h1>
+        
+        <!-- Navigation Menu -->
+        <nav>
+            <ul>
+                <li><a href="admin-portal.html">Dashboard</a></li>
+                <li><a href="student-dashboard.html">Student Management</a></li>
+                <li><a href="course-dashboard.html">Course Management</a></li>
+                <!-- <li><a href="#" id="logout-btn">Logout</a></li> Logout Button -->
+            </ul>
+        </nav>
+
+        <!-- Attendance Table -->
+        <section id="attendance-section">
+            <h2>Mark Attendance</h2>
+            <form id="attendance-form">
+                <input type="hidden" id="attendance-id">
+                <label class="text">Select Student:</label>
+                <select id="student-select" class="input" required>
+                    <!-- Students will be populated dynamically -->
+                </select>
+
+                <label class="text">Attendance Status:</label>
+                <div class="radio-group">
+                    <input type="radio" name="attendance-status" value="Present" id="present" required>
+                    <label for="present" class="label-text">Present</label>
+                    <input type="radio" name="attendance-status" value="Absent" id="absent">
+                    <label for="absent" class="label-text">Absent</label>
+                </div>
+
+                <button type="submit" class="btn">Mark Attendance</button>
+            </form>
+
+            <h2>Attendance Records</h2>
+            <table id="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Attendance records will be populated dynamically -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script src="attendance-script.js"></script>
+</body>
+</html>
